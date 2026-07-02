@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حاسبة المعدل التراكمي - كلية التربية النوعية - جامعة عين شمس</title>
+  <meta name="description" content="حاسبة المعدل التراكمي لكلية التربية النوعية - جامعة عين شمس" />
+
+  <!-- Google Fonts: Cairo + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="light-mode" data-lang="ar">
+
+  <!-- ===== TOP HEADER ===== -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="university-brand">
+        <div class="university-logo">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div class="university-text">
+          <span class="uni-name i18n" data-ar="جامعة عين شمس" data-en="Ain Shams University">جامعة عين شمس</span>
+          <span class="faculty-name i18n" data-ar="كلية التربية النوعية" data-en="Faculty of Specific Education">كلية التربية النوعية</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button class="ctrl-btn" id="langToggle" title="Switch Language" aria-label="Switch Language">
+          <i class="fa-solid fa-globe"></i>
+          <span id="langLabel" class="ctrl-label">EN</span>
+        </button>
+        <button class="ctrl-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="app-main">
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="hero-icon-wrap">
+        <i class="fa-solid fa-calculator"></i>
+      </div>
+      <h1 class="hero-title i18n" data-ar="حاسبة المعدل التراكمي" data-en="GPA Calculator">حاسبة المعدل التراكمي</h1>
+      <p class="hero-sub i18n" data-ar="احسب معدلك الفصلي والتراكمي وفق نظام الدرجات المعتمد" data-en="Calculate your semester GPA and cumulative CGPA using the official grading scale">احسب معدلك الفصلي والتراكمي وفق نظام الدرجات المعتمد</p>
+    </section>
+
+    <!-- ===== FORM CARD ===== -->
+    <section class="card form-card">
+      <div class="card-header">
+        <i class="fa-solid fa-pen-to-square card-icon"></i>
+        <h2 class="card-title i18n" data-ar="بيانات الفصل الدراسي" data-en="Semester Information">بيانات الفصل الدراسي</h2>
+      </div>
+
+      <div class="form-row two-col">
+        <!-- Academic Year -->
+        <div class="form-group">
+          <label class="form-label i18n" data-ar="السنة الدراسية" data-en="Academic Year">السنة الدراسية</label>
+          <div class="select-wrapper">
+            <select id="academicYear" class="form-select">
+              <option value="" class="i18n" data-ar="اختر السنة" data-en="Select Year">اختر السنة</option>
+              <option value="1" class="i18n" data-ar="السنة الأولى" data-en="First Year">السنة الأولى</option>
+              <option value="2" class="i18n" data-ar="السنة الثانية" data-en="Second Year">السنة الثانية</option>
+              <option value="3" class="i18n" data-ar="السنة الثالثة" data-en="Third Year">السنة الثالثة</option>
+              <option value="4" class="i18n" data-ar="السنة الرابعة" data-en="Fourth Year">السنة الرابعة</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+        <!-- Semester -->
+        <div class="form-group">
+          <label class="form-label i18n" data-ar="الفصل الدراسي" data-en="Semester">الفصل الدراسي</label>
+          <div class="select-wrapper">
+            <select id="semester" class="form-select">
+              <option value="" class="i18n" data-ar="اختر الفصل" data-en="Select Semester">اختر الفصل</option>
+              <option value="1" class="i18n" data-ar="الفصل الأول" data-en="First Semester">الفصل الأول</option>
+              <option value="2" class="i18n" data-ar="الفصل الثاني" data-en="Second Semester">الفصل الثاني</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Courses header -->
+      <div class="courses-header">
+        <h3 class="courses-title i18n" data-ar="المقررات الدراسية" data-en="Courses">المقررات الدراسية</h3>
+        <button class="btn btn-primary btn-sm" id="addCourseBtn">
+          <i class="fa-solid fa-plus"></i>
+          <span class="i18n" data-ar="إضافة مقرر" data-en="Add Course">إضافة مقرر</span>
+        </button>
+      </div>
+
+      <!-- Courses column labels -->
+      <div class="courses-col-labels">
+        <span class="i18n" data-ar="اسم المقرر" data-en="Course Name">اسم المقرر</span>
+        <span class="i18n" data-ar="الساعات المعتمدة" data-en="Credit Hours">الساعات المعتمدة</span>
+        <span class="i18n" data-ar="الدرجة (من 100)" data-en="Grade (out of 100)">الدرجة (من 100)</span>
+        <span></span>
+      </div>
+
+      <!-- Course rows injected by JS -->
+      <div id="coursesList" class="courses-list"></div>
+
+      <!-- Error -->
+      <div id="errorMsg" class="error-msg hidden">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="errorText"></span>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="clearFormBtn">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span class="i18n" data-ar="مسح النموذج" data-en="Clear Form">مسح النموذج</span>
+        </button>
+        <button class="btn btn-success" id="calculateBtn">
+          <i class="fa-solid fa-calculator"></i>
+          <span class="i18n" data-ar="احسب المعدل" data-en="Calculate GPA">احسب المعدل</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== RESULTS CARD ===== -->
+    <section class="card results-card hidden" id="resultsSection">
+      <div class="card-header">
+        <i class="fa-solid fa-chart-bar card-icon"></i>
+        <h2 class="card-title i18n" data-ar="نتيجة الفصل الدراسي" data-en="Semester Result">نتيجة الفصل الدراسي</h2>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-item primary-result">
+          <div class="result-label i18n" data-ar="المعدل الفصلي" data-en="Semester GPA">المعدل الفصلي</div>
+          <div class="result-value" id="semGPA">0.000</div>
+          <div class="result-grade" id="semGrade">—</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label i18n" data-ar="التقدير" data-en="Grade Letter">التقدير</div>
+          <div class="result-value grade-letter" id="semLetter">—</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label i18n" data-ar="إجمالي الساعات" data-en="Total Hours">إجمالي الساعات</div>
+          <div class="result-value" id="semHours">0</div>
+        </div>
+      </div>
+
+      <!-- GPA Bar -->
+      <div class="gpa-bar-wrapper">
+        <div class="gpa-bar-track">
+          <div class="gpa-bar-fill" id="gpaBarFill" style="width:0%"></div>
+        </div>
+        <div class="gpa-bar-labels">
+          <span>0.0</span><span>1.0</span><span>2.0</span><span>3.0</span><span>4.0</span>
+        </div>
+      </div>
+
+      <div class="save-row">
+        <button class="btn btn-primary" id="saveSemesterBtn">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span class="i18n" data-ar="حفظ الفصل في السجل" data-en="Save to History">حفظ الفصل في السجل</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== CGPA CARD ===== -->
+    <section class="card cgpa-card" id="cgpaSection">
+      <div class="card-header">
+        <i class="fa-solid fa-trophy card-icon"></i>
+        <h2 class="card-title i18n" data-ar="المعدل التراكمي الإجمالي (CGPA)" data-en="Cumulative GPA (CGPA)">المعدل التراكمي الإجمالي (CGPA)</h2>
+      </div>
+
+      <div id="cgpaEmpty" class="empty-state">
+        <i class="fa-regular fa-folder-open empty-icon"></i>
+        <p class="i18n" data-ar="احفظ فصلاً دراسياً لعرض المعدل التراكمي" data-en="Save a semester to see your CGPA">احفظ فصلاً دراسياً لعرض المعدل التراكمي</p>
+      </div>
+
+      <div id="cgpaDisplay" class="cgpa-display hidden">
+        <div class="cgpa-ring-wrapper">
+          <div class="cgpa-circle">
+            <svg viewBox="0 0 120 120" class="cgpa-svg" aria-hidden="true">
+              <circle class="cgpa-ring-bg" cx="60" cy="60" r="50"></circle>
+              <circle class="cgpa-ring-fill" id="cgpaRingFill" cx="60" cy="60" r="50"
+                stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+            </svg>
+            <div class="cgpa-center-text">
+              <span class="cgpa-number" id="cgpaValue">0.000</span>
+              <span class="cgpa-sub-label i18n" data-ar="تراكمي" data-en="CGPA">تراكمي</span>
+            </div>
+          </div>
+          <div class="cgpa-info-block">
+            <div class="cgpa-grade-pill" id="cgpaGrade">—</div>
+            <div class="cgpa-stats">
+              <div class="cgpa-stat-row">
+                <i class="fa-solid fa-clock"></i>
+                <span class="i18n" data-ar="إجمالي الساعات: " data-en="Total Hours: ">إجمالي الساعات: </span>
+                <strong id="cgpaTotalHours">0</strong>
+              </div>
+              <div class="cgpa-stat-row">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="i18n" data-ar="عدد الفصول: " data-en="Semesters: ">عدد الفصول: </span>
+                <strong id="cgpaSemCount">0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HISTORY CARD ===== -->
+    <section class="card history-card">
+      <div class="card-header">
+        <i class="fa-solid fa-clock-rotate-left card-icon"></i>
+        <h2 class="card-title i18n" data-ar="سجل الفصول الدراسية" data-en="Semesters History">سجل الفصول الدراسية</h2>
+        <button class="btn btn-danger btn-sm header-action-btn" id="resetAllBtn">
+          <i class="fa-solid fa-trash-can"></i>
+          <span class="i18n" data-ar="حذف الكل" data-en="Reset All">حذف الكل</span>
+        </button>
+      </div>
+
+      <div id="historyEmpty" class="empty-state">
+        <i class="fa-regular fa-clipboard empty-icon"></i>
+        <p class="i18n" data-ar="لا يوجد سجل بعد. احسب فصلك الأول وابدأ!" data-en="No history yet. Calculate your first semester!">لا يوجد سجل بعد. احسب فصلك الأول وابدأ!</p>
+      </div>
+
+      <div id="historyTableWrapper" class="table-wrapper hidden">
+        <table class="history-table" id="historyTable">
+          <thead>
+            <tr>
+              <th class="i18n" data-ar="السنة" data-en="Year">السنة</th>
+              <th class="i18n" data-ar="الفصل" data-en="Semester">الفصل</th>
+              <th class="i18n" data-ar="المعدل" data-en="GPA">المعدل</th>
+              <th class="i18n" data-ar="التقدير" data-en="Grade">التقدير</th>
+              <th class="i18n" data-ar="الساعات" data-en="Hours">الساعات</th>
+              <th class="i18n" data-ar="إجراءات" data-en="Actions">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== GRADING SCALE CARD ===== -->
+    <section class="card grade-ref-card">
+      <div class="card-header clickable" id="toggleGradeRef">
+        <i class="fa-solid fa-table-list card-icon"></i>
+        <h2 class="card-title i18n" data-ar="جدول التقديرات المرجعي" data-en="Grading Scale Reference">جدول التقديرات المرجعي</h2>
+        <i class="fa-solid fa-chevron-down grade-chevron" id="gradeChevron"></i>
+      </div>
+      <div id="gradeRefContent" class="grade-ref-content hidden">
+        <div class="grade-ref-grid">
+          <div class="grade-item"><span class="gr-range">95 – 100</span><span class="gr-pts">3.7 - 4.0</span><span class="gr-letter g-a">A+</span></div>
+          <div class="grade-item"><span class="gr-range">90 – 95</span><span class="gr-pts">3.4 - 3.7</span><span class="gr-letter g-a-">A</span></div>
+          <div class="grade-item"><span class="gr-range">85 – 90</span><span class="gr-pts">3.1 - 3.4</span><span class="gr-letter g-bp">B+</span></div>
+          <div class="grade-item"><span class="gr-range">80 – 85</span><span class="gr-pts">2.8 - 3.1</span><span class="gr-letter g-b">B</span></div>
+          <div class="grade-item"><span class="gr-range">75 – 80</span><span class="gr-pts">2.5 - 2.8</span><span class="gr-letter g-bm">C+</span></div>
+          <div class="grade-item"><span class="gr-range">70 – 75</span><span class="gr-pts">2.2 - 2.5</span><span class="gr-letter g-cp">C</span></div>
+          <div class="grade-item"><span class="gr-range">65 – 70</span><span class="gr-pts">1.9 - 2.2</span><span class="gr-letter g-c">D+</span></div>
+          <div class="grade-item"><span class="gr-range">60 – 65</span><span class="gr-pts">1.6 - 1.9</span><span class="gr-letter g-cm">D</span></div>
+          <div class="grade-item"><span class="gr-range">59.9</span><span class="gr-pts">1.59</span><span class="gr-letter g-dp">F</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== EDIT MODAL ===== -->
+  <div class="modal-overlay hidden" id="editModal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title i18n" data-ar="تعديل بيانات الفصل" data-en="Edit Semester">تعديل بيانات الفصل</h3>
+        <button class="modal-close" id="closeEditModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex" />
+        <div class="form-group">
+          <label class="form-label i18n" data-ar="المعدل الفصلي (0.000 – 4.000)" data-en="Semester GPA (0.000 – 4.000)">المعدل الفصلي (0.000 – 4.000)</label>
+          <input type="number" id="editGPA" class="form-input" min="0" max="4" step="0.001" placeholder="0.000" />
+        </div>
+        <div class="form-group">
+          <label class="form-label i18n" data-ar="إجمالي الساعات المعتمدة" data-en="Total Credit Hours">إجمالي الساعات المعتمدة</label>
+          <input type="number" id="editHours" class="form-input" min="1" max="40" placeholder="0" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="cancelEdit"><span class="i18n" data-ar="إلغاء" data-en="Cancel">إلغاء</span></button>
+        <button class="btn btn-primary" id="confirmEdit">
+          <i class="fa-solid fa-floppy-disk"></i>
+          <span class="i18n" data-ar="حفظ التعديل" data-en="Save Changes">حفظ التعديل</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DELETE MODAL ===== -->
+  <div class="modal-overlay hidden" id="deleteModal" role="dialog" aria-modal="true">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title i18n" data-ar="تأكيد الحذف" data-en="Confirm Delete">تأكيد الحذف</h3>
+        <button class="modal-close" id="closeDeleteModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="i18n" data-ar="هل أنت متأكد من حذف هذا الفصل؟ لا يمكن التراجع عن هذا الإجراء." data-en="Are you sure you want to delete this semester? This cannot be undone.">هل أنت متأكد من حذف هذا الفصل؟ لا يمكن التراجع عن هذا الإجراء.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="cancelDelete"><span class="i18n" data-ar="إلغاء" data-en="Cancel">إلغاء</span></button>
+        <button class="btn btn-danger" id="confirmDelete">
+          <i class="fa-solid fa-trash-can"></i>
+          <span class="i18n" data-ar="حذف" data-en="Delete">حذف</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RESET MODAL ===== -->
+  <div class="modal-overlay hidden" id="resetModal" role="dialog" aria-modal="true">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title i18n" data-ar="إعادة تعيين جميع البيانات" data-en="Reset All Data">إعادة تعيين جميع البيانات</h3>
+        <button class="modal-close" id="closeResetModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="i18n" data-ar="سيتم حذف جميع الفصول المحفوظة بشكل نهائي. هل أنت متأكد؟" data-en="All saved semesters will be permanently deleted. Are you sure?">سيتم حذف جميع الفصول المحفوظة بشكل نهائي. هل أنت متأكد؟</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="cancelReset"><span class="i18n" data-ar="إلغاء" data-en="Cancel">إلغاء</span></button>
+        <button class="btn btn-danger" id="confirmReset">
+          <i class="fa-solid fa-trash-can"></i>
+          <span class="i18n" data-ar="حذف الكل" data-en="Reset All">حذف الكل</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="app-footer">
+    <p class="i18n" data-ar="كلية التربية النوعية — جامعة عين شمس" data-en="Faculty of Specific Education — Ain Shams University">كلية التربية النوعية — جامعة عين شمس</p>
+    <p class="footer-sub i18n" data-ar="حاسبة المعدل التراكمي الرسمية" data-en="GPA Calculator">حاسبة المعدل التراكمي </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
