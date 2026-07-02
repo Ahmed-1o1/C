@@ -43,16 +43,16 @@ function gradeToGPA(score) {
  * @returns {string} letter grade
  */
  function gpaToLetter(gpa) {
-  if (gpa >= 4.0) return 'A+';
-  if (gpa >= 3.7) return 'A';
-  if (gpa >= 3.4) return 'B+';
-  if (gpa >= 3.1) return 'B';
-  if (gpa >= 2.8) return 'C+';
-  if (gpa >= 2.5) return 'C';
-  if (gpa >= 2.2) return 'D+';
-  if (gpa >= 1.9) return 'D';
+  if (gpa >= 3.7 && gpa <= 4.0) return 'A+';
+  if (gpa >= 3.4 && gpa < 3.7) return 'A';
+  if (gpa >= 3.1 && gpa < 3.4) return 'B+';
+  if (gpa >= 2.8 && gpa < 3.1) return 'B';
+  if (gpa >= 2.5 && gpa < 2.8) return 'C+';
+  if (gpa >= 2.2 && gpa < 2.5) return 'C';
+  if (gpa >= 1.9 && gpa < 2.2) return 'D+';
+  if (gpa >= 1.6 && gpa < 1.9) return 'D';
   return 'F';
-}
+ }
 
 /* i18n strings */
 const STRINGS = {
